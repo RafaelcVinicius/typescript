@@ -2,7 +2,7 @@
   <div>
     <h4>Gerador de CNPJ</h4>
     <button @click="gerarCPF">Gerar</button>
-    <span>{{ dig1}} {{dig2}} {{dig3}}</span>
+    <span>{{ cpf }}</span>
   </div>
 </template>
 
@@ -34,13 +34,13 @@ export default defineComponent({
       this.dig2 = String(this.numeroRandom());
       this.dig3 = String(this.numeroRandom());
       this.numdvpri = String(this.dvpri(this.dig1, this.dig2, this.dig3));
-      // this.numdvseg = String(this.dvseg(this.dig1, this.dig2, this.dig3, this.numdvpri));
+      this.numdvseg = String(this.dvseg(this.dig1, this.dig2, this.dig3, this.numdvpri));
 
-      // this.cpf = this.dig1 + this.dig2 + this.dig3 + this.numdvpri + this.numdvseg;
+      this.cpf = this.dig1 + this.dig2 + this.dig3 + this.numdvpri + this.numdvseg;
     },
 
     numeroRandom() {
-      this.numero = String(Math.floor(Math.random() * 99));
+      this.numero = String(Math.floor(Math.random() * 999));
       if (this.numero.length === 2) {
         this.numero = '0'.concat(this.numero);
       } else if (this.numero.length === 1) {
@@ -52,12 +52,11 @@ export default defineComponent({
     dvpri(dig1: string, dig2: string, dig3: string) {
       let x = 0;
       let ret = 0;
-      const j = 0;
-      const i = 10;
+      let j = 0;
       const nums = dig1.split('').concat(dig2.split(''), dig3.split(''));
-      for (i; i >= 2; i -= 1) {
-        console.log(i);
-        x += Number(nums[j += 1]) * i;
+      for (let i = 10; i >= 2; i -= 1) {
+        x += Number(nums[j]) * i;
+        j += 1;
       }
       const y = x % 11;
       if (y < 2) {
@@ -71,12 +70,12 @@ export default defineComponent({
     dvseg(dig1: string, dig2: string, dig3: string, numdvpri: string) {
       let x = 0;
       let ret = 0;
-      const j = 0;
-      const i = 11;
+      let j = 0;
       const nums = dig1.split('').concat(dig2.split(''), dig3.split(''));
       nums[9] = numdvpri;
-      for (i; i >= 2; i -= 1) {
-        x += Number(nums[j += 1]) * i;
+      for (let i = 11; i >= 2; i -= 1) {
+        x += Number(nums[j]) * i;
+        j += 1;
       }
       const y = x % 11;
       if (y < 2) {
