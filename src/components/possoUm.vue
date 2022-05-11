@@ -55,9 +55,9 @@ export default defineComponent({
       const j = 0;
       const i = 10;
       const nums = dig1.split('').concat(dig2.split(''), dig3.split(''));
-      for (i; i >= 2; i - 1) {
+      for (i; i >= 2; i -= 1) {
         console.log(i);
-        x += Number(nums[j + 1]) * i;
+        x += Number(nums[j += 1]) * i;
       }
       const y = x % 11;
       if (y < 2) {
@@ -75,8 +75,8 @@ export default defineComponent({
       const i = 11;
       const nums = dig1.split('').concat(dig2.split(''), dig3.split(''));
       nums[9] = numdvpri;
-      for (i; i >= 2; i - 1) {
-        x += Number(nums[j + 1]) * i;
+      for (i; i >= 2; i -= 1) {
+        x += Number(nums[j += 1]) * i;
       }
       const y = x % 11;
       if (y < 2) {
