@@ -8,7 +8,7 @@
       <button class="div-btn" @click="gerarCPF">Gerar</button>
     </div>
     <div class="div-content">
-      <span>{{ cpf }}</span>
+      <span>{{ cpf }}{{ filter }}</span>
     </div>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default defineComponent({
   name: 'GeradorCpf',
   data() {
     return {
-      cpf: '' as string | number,
+      cpf: '' as string,
       gerandocfp: '' as object | string | number,
       numero: '' as number | string,
       dig1: '' as number | string,
@@ -30,6 +30,17 @@ export default defineComponent({
       numdvpri: '' as number | string,
       numdvseg: '' as number | string,
     };
+  },
+
+  computed: {
+    filter(): string | any {
+      const arr = this.cpf.split('');
+      arr.splice(3, 0, '.');
+      arr.splice(7, 0, '.');
+      arr.splice(11, 0, '-');
+      arr.join('');
+      return arr;
+    },
   },
 
   methods: {
