@@ -4,11 +4,17 @@
       <h4 class="titulo">Gerador de CNPJ</h4>
     </div>
     <div class="div-acoes">
-      <span></span>
+      <div class="btn-check"
+        @keyup="ativarFormatacao = !ativarFormatacao"
+        @click="ativarFormatacao = !ativarFormatacao"
+        :class="{ativo: ativarFormatacao}"
+      >
+        <span></span>
+      </div>
       <button class="div-btn" @click="gerarCPF">Gerar</button>
     </div>
     <div class="div-content">
-      <span>{{ cpf }}{{ filter }}</span>
+      <span>{{ filter }}</span>
     </div>
   </div>
 </template>
@@ -29,17 +35,25 @@ export default defineComponent({
       dig3: '' as number | string,
       numdvpri: '' as number | string,
       numdvseg: '' as number | string,
+      ativarFormatacao: false as boolean,
     };
   },
 
   computed: {
     filter(): string | any {
-      const arr = this.cpf.split('');
-      arr.splice(3, 0, '.');
-      arr.splice(7, 0, '.');
-      arr.splice(11, 0, '-');
-      arr.join('');
-      return arr;
+      let cpfDormatado = '';
+      if (this.ativarFormatacao) {
+        const arr = this.cpf.split('');
+        arr.splice(3, 0, '.');
+        arr.splice(7, 0, '.');
+        arr.splice(11, 0, '-');
+        arr.forEach((element) => {
+          cpfDormatado += element;
+        });
+      } else {
+        cpfDormatado = this.cpf;
+      }
+      return cpfDormatado.length < 11 ? 'Gere seu CPF' : cpfDormatado;
     },
   },
 
@@ -106,12 +120,42 @@ export default defineComponent({
 </script>
 
 <style>
-#cpf{
+#cpf {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 3rem;
+  gap: 1rem;
   color: rgb(77, 76, 76);
+}
+.ativo {
+  background-color: rgb(219, 219, 255) !important;
+  border: 1px solid rgb(213, 213, 247) !important;
+}
+.ativo span{
+  transition: 0.1s;
+  left: 20px !important;
+  border: 1px solid rgb(112, 112, 221) !important;
+  background-color: #497ecc !important;
+ }
+ .btn-check {
+  cursor: pointer;
+  width: 48px;
+  height: 15px;
+  background-color: rgb(226, 226, 226);
+  border-radius: 20px;
+  border: 1px solid rgb(219, 219, 219);
+  position: relative;
+}
+.btn-check span {
+  transition: 0.1s;
+  position: absolute;
+  top: -7px;
+  left: -1px;
+  width: 26px;
+  height: 26px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 1px 3px 6px rgb(133, 132, 132);
+  border-radius: 100%;
 }
 </style>
