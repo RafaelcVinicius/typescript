@@ -2,7 +2,6 @@ FROM node:17 as build
 
 RUN yarn global add @vue/cli
 
-RUN npm ci -- silent
 RUN yarn run build
 
 FROM nginx
